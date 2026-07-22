@@ -73,6 +73,14 @@ class Ship:
             print(f"Le navire {self.name} est coulé!")
 
     @staticmethod
+    def tir(coordonnees_tir):
+        # Un tir a été émis sur des coordonnées On va parcourir les navires pour chercher quel navire comprend ces coordonnées
+        for ship in Ship.ships_list:
+            list_cases = ship.list_cases
+            if coordonnees_tir in list_cases:
+                return ship
+
+    @staticmethod
     def get_list_ships():
         """ Fonction qui renvoie la liste des navires"""
         return Ship.ships_list

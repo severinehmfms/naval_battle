@@ -128,8 +128,6 @@ if __name__ == '__main__':
                 ship_cases[coordonnees_tir] = const.CONST_TOUCHE
                 # On récupère le navire touché par le tir
                 ship_touched = Ship.tir(coordonnees_tir)
-                # Je mets à jour le navire touché
-                ship_touched.touche()
                 if ship_touched.is_coule:
                     # Si coulé, pour chaque case de ce navire dans ship_cases je mets le statut Coulé
                     for macase in ship_touched.list_cases:

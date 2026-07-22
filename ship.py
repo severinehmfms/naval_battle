@@ -63,11 +63,14 @@ class Ship:
         return list_cases
 
     def touche(self):
+        print("Fonction touche!")
         """Méthode qui met à jour le navire quand il est touché"""
         self.nb_touche = self.nb_touche+1
+        print(f"Le navire {self.name} est touche, il y a {self.nb_touche} cases de touchées")
         # Si toutes les cases du navire sont touchées, on le note Coulé
         if self.nb_touche == self.length_ship:
             self.is_coule = True
+            print(f"Le navire {self.name} est coulé!")
 
     @staticmethod
     def get_list_ships():

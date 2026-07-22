@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import string
 import constantes as const
 from ship import Ship
 
@@ -87,17 +86,15 @@ def print_game_grid(ship_cases, missed_shot):
 
 
 def init_ship():
-    ship1 = Ship("aircraft_carrier", 5, const.CONST_HORIZONTAL, "B2")
-    ship2 = Ship("cruiser", 4, const.CONST_VERTICAL, "A4")
-    ship3 = Ship("destroyer", 3, const.CONST_VERTICAL, "C5")
-    ship4 = Ship("submarine", 3, const.CONST_HORIZONTAL, "H5")
-    ship5 = Ship("torpedo_boat", 2, const.CONST_HORIZONTAL, "E9")
+    _ = Ship("aircraft_carrier", 5, const.CONST_HORIZONTAL, "B2")
+    _ = Ship("cruiser", 4, const.CONST_VERTICAL, "A4")
+    _ = Ship("destroyer", 3, const.CONST_VERTICAL, "C5")
+    _ = Ship("submarine", 3, const.CONST_HORIZONTAL, "H5")
+    _ = Ship("torpedo_boat", 2, const.CONST_HORIZONTAL, "E9")
 
 
 if __name__ == '__main__':
     print("*********************************** Bataille navalle ********************************************")
-    ship_list = []
-    ship_cases = {}
 
     # Initialisation de la liste des navires
     init_ship()

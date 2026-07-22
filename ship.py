@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import ClassVar
+import constantes as const
 
 @dataclass
 class Ship:
@@ -30,9 +31,36 @@ class Ship:
         #On ajoute le navire à la liste des navires
         Ship.ships_list.append(self)
 
-    def set_list_cases(self, list_cases):
-        """Méthode pour mettre à jour la liste des cases du navire"""
-        self.list_cases = list_cases
+    def get_case_suivante(self, case, sens):
+        """ Fonction qui va renvoyer les coordonnées de la case suivante en fonction du sens"""
+        # On décompose la case entre lettre_colonne et numero_ligne
+        lettre_colonne = case[0]
+        numero_ligne = case[1:2]
+        case_suivante = ""
+        if sens == const.CONST_HORIZONTAL:
+            # Nouvelle case = colonne + 1, même numéro de ligne
+            indice_colonne = const.columns_alpha_list.index(lettre_colonne)
+            case_suivante = const.columns_alpha_list[indice_colonne + 1].upper() + str(numero_ligne)
+        elif sens == const.CONST_VERTICAL:
+            # Nouvelle case = même colonne, numéro de ligne + 1
+            case_suivante = lettre_colonne.upper() + str(int(numero_ligne) + 1)
+        return case_suivante
+
+    def get_list_cases(self):
+        """
+            Fonction qui retourne les coordonnées des cases qui composent un navire (sous forme de tableau)
+            firt_case : Coordonnées de la première case
+            sens : Sens du bateau horizontal ou vertical H/V
+            length_ship : la taille du bateau
+
+        """
+        list_cases = [self.first_case]
+        case_en_cours = self.first_case
+        # Pour la longueur du navire je rajoute les cases
+        for _ in range(1, self.length_ship):
+            case_en_cours = self.get_case_suivante(case_en_cours, self.sens)
+            list_cases.append(case_en_cours)
+        return list_cases
 
     def touche(self):
         """Méthode qui met à jour le navire quand il est touché"""
@@ -45,3 +73,17 @@ class Ship:
     def get_list_ships():
         """ Fonction qui renvoie la liste des navires"""
         return Ship.ships_list
+
+    @staticmethod
+    def get_ship_cases():
+        """Fonction qui récupère les coordonnées des cases de tous les navires """
+        ship_cases = {}
+        # Je parcours ma liste de navires
+        for ship in Ship.ships_list:
+            # list_cases = get_list_cases_by_ship(ship['first_case'], ship['sens'], ship['length_ship'])
+            list_cases = ship.get_list_cases()
+            ship.list_cases = list_cases
+            # On ajoute la liste des coordonnées de ce navire à la liste globale des coordonnées
+            for case in ship.list_cases:
+                ship_cases[case] = const.CONST_INTACT
+        return ship_cases

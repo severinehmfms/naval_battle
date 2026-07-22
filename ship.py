@@ -63,21 +63,19 @@ class Ship:
         return list_cases
 
     def touche(self):
-        print("Fonction touche!")
         """Méthode qui met à jour le navire quand il est touché"""
         self.nb_touche = self.nb_touche+1
-        print(f"Le navire {self.name} est touche, il y a {self.nb_touche} cases de touchées")
         # Si toutes les cases du navire sont touchées, on le note Coulé
         if self.nb_touche == self.length_ship:
             self.is_coule = True
-            print(f"Le navire {self.name} est coulé!")
 
     @staticmethod
     def tir(coordonnees_tir):
-        # Un tir a été émis sur des coordonnées On va parcourir les navires pour chercher quel navire comprend ces coordonnées
+        # Un tir a été émis sur des coordonnées On va parcourir les navires pour chercher quel navire est touché
         for ship in Ship.ships_list:
             list_cases = ship.list_cases
             if coordonnees_tir in list_cases:
+                ship.touche()
                 return ship
 
     @staticmethod
@@ -87,11 +85,10 @@ class Ship:
 
     @staticmethod
     def get_ship_cases():
-        """Fonction qui récupère les coordonnées des cases de tous les navires """
+        """Fonction qui récupère les coordonnées des cases de tous les navires initialisées à INTACTES (pour début de partie)"""
         ship_cases = {}
         # Je parcours ma liste de navires
         for ship in Ship.ships_list:
-            # list_cases = get_list_cases_by_ship(ship['first_case'], ship['sens'], ship['length_ship'])
             list_cases = ship.get_list_cases()
             ship.list_cases = list_cases
             # On ajoute la liste des coordonnées de ce navire à la liste globale des coordonnées

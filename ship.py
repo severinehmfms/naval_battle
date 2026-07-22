@@ -34,6 +34,13 @@ class Ship:
         """Méthode pour mettre à jour la liste des cases du navire"""
         self.list_cases = list_cases
 
+    def touche(self):
+        """Méthode qui met à jour le navire quand il est touché"""
+        self.nb_touche = self.nb_touche+1
+        # Si toutes les cases du navire sont touchées, on le note Coulé
+        if self.nb_touche == self.length_ship:
+            self.is_coule = True
+
     @staticmethod
     def get_list_ships():
         """ Fonction qui renvoie la liste des navires"""

@@ -93,6 +93,7 @@ def init_ship():
     ship4 = Ship("submarine", 3, const.CONST_HORIZONTAL, "H5")
     ship5 = Ship("torpedo_boat", 2, const.CONST_HORIZONTAL, "E9")
 
+
 if __name__ == '__main__':
     print("*********************************** Bataille navalle ********************************************")
     ship_list = []
@@ -123,10 +124,9 @@ if __name__ == '__main__':
             elif ship_cases[coordonnees_tir] == const.CONST_COULE:
                 print("Navire déjà coulé précédemment.")
             else:
-                print("On a touché un navire, on passe là")
                 # On a touché un navire
                 ship_cases[coordonnees_tir] = const.CONST_TOUCHE
-                # On récupère le navire touché
+                # On récupère le navire touché par le tir
                 ship_touched = Ship.tir(coordonnees_tir)
                 # Je mets à jour le navire touché
                 ship_touched.touche()

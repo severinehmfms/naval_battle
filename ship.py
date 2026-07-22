@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar
 import constantes as const
 
+
 @dataclass
 class Ship:
     name: str
@@ -28,10 +29,11 @@ class Ship:
         self.nb_touche = 0
         self.is_coule = False
         self.list_cases = []
-        #On ajoute le navire à la liste des navires
+        # On ajoute le navire à la liste des navires
         Ship.ships_list.append(self)
 
-    def get_case_suivante(self, case, sens):
+    @staticmethod
+    def get_case_suivante(case, sens):
         """ Fonction qui va renvoyer les coordonnées de la case suivante en fonction du sens"""
         # On décompose la case entre lettre_colonne et numero_ligne
         lettre_colonne = case[0]
@@ -77,6 +79,7 @@ class Ship:
             if coordonnees_tir in list_cases:
                 ship.touche()
                 return ship
+        return False
 
     @staticmethod
     def get_list_ships():
@@ -85,7 +88,8 @@ class Ship:
 
     @staticmethod
     def get_ship_cases():
-        """Fonction qui récupère les coordonnées des cases de tous les navires initialisées à INTACTES (pour début de partie)"""
+        """Fonction qui récupère les coordonnées des cases de tous les navires
+         ATTENTION Elles sont initialisées à INTACTES (pour début de partie)"""
         ship_cases = {}
         # Je parcours ma liste de navires
         for ship in Ship.ships_list:

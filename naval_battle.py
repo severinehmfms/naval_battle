@@ -91,7 +91,6 @@ def maj_ship_touched(ship_list, coordonnees_tir):
     for ship in ship_list:
         list_cases = ship.list_cases
         if coordonnees_tir in list_cases:
-            ship.touche()
             return ship
         return False
 
@@ -132,18 +131,23 @@ if __name__ == '__main__':
             elif ship_cases[coordonnees_tir] == const.CONST_COULE:
                 print("Navire déjà coulé précédemment.")
             else:
-                #On a touché un navire
+                print("On a touché un navire, on passe là")
+                # On a touché un navire
                 ship_cases[coordonnees_tir] = const.CONST_TOUCHE
-                # On récupère les informations du navire touché
+                # On récupère le navire touché #TODO Il faudra mettre cette fonction dans ship.py...
                 ship_touched = maj_ship_touched(ship_list, coordonnees_tir)
-                if ship_touched != False and ship_touched.is_coule:
-                    # Si coulé, pour chaque case de ce navire dans ship_cases je mets le statut Coulé
-                    for macase in ship_touched.list_cases:
-                        ship_cases[macase] = const.CONST_COULE
-                    print(f"Navire {ship_touched.name} coulé !")
-                    nb_sunken_ship += 1
-                else:
-                    print("Touché ! ")
+                if ship_touched != False:
+                    # Je mets à jour le navire touché
+                    ship_touched.touche()
+                    if ship_touched.is_coule:
+                        # Si coulé, pour chaque case de ce navire dans ship_cases je mets le statut Coulé
+                        for macase in ship_touched.list_cases:
+                            ship_cases[macase] = const.CONST_COULE
+                        print(f"Navire {ship_touched.name} coulé !")
+                        nb_sunken_ship += 1
+
+                    else:
+                        print("Touché ! ")
         else:
             print("Tir manqué ! ")
             missed_shot.append(coordonnees_tir)

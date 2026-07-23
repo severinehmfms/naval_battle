@@ -48,7 +48,15 @@ class Ship:
             case_suivante = lettre_colonne.upper() + str(int(numero_ligne) + 1)
         return case_suivante
 
-    def get_list_cases(self):
+    def touche(self):
+        """Méthode qui met à jour le navire quand il est touché"""
+        self.nb_touche = self.nb_touche+1
+        # Si toutes les cases du navire sont touchées, on le note Coulé
+        if self.nb_touche == self.length_ship:
+            self.is_coule = True
+
+    @staticmethod
+    def get_list_cases_by_first(first_case,sens,length_ship):
         """
             Fonction qui retourne les coordonnées des cases qui composent un navire (sous forme de tableau)
             firt_case : Coordonnées de la première case
@@ -56,20 +64,13 @@ class Ship:
             length_ship : la taille du bateau
 
         """
-        list_cases = [self.first_case]
-        case_en_cours = self.first_case
+        list_cases = [first_case]
+        case_en_cours = first_case
         # Pour la longueur du navire je rajoute les cases
-        for _ in range(1, self.length_ship):
-            case_en_cours = self.get_case_suivante(case_en_cours, self.sens)
+        for _ in range(1, length_ship):
+            case_en_cours = Ship.get_case_suivante(case_en_cours, sens)
             list_cases.append(case_en_cours)
         return list_cases
-
-    def touche(self):
-        """Méthode qui met à jour le navire quand il est touché"""
-        self.nb_touche = self.nb_touche+1
-        # Si toutes les cases du navire sont touchées, on le note Coulé
-        if self.nb_touche == self.length_ship:
-            self.is_coule = True
 
     @staticmethod
     def tir(coordonnees_tir):
@@ -93,7 +94,8 @@ class Ship:
         ship_cases = {}
         # Je parcours ma liste de navires
         for ship in Ship.ships_list:
-            list_cases = ship.get_list_cases()
+            #list_cases = ship.get_list_cases()
+            list_cases = Ship.get_list_cases_by_first(ship.first_case,ship.sens,ship.length_ship)
             ship.list_cases = list_cases
             # On ajoute la liste des coordonnées de ce navire à la liste globale des coordonnées
             for case in ship.list_cases:

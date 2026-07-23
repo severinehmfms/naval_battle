@@ -3,6 +3,7 @@
 
 import constantes as const
 from ship import Ship
+import random
 
 """
 Bataille navale
@@ -93,11 +94,66 @@ def init_ship():
     _ = Ship("torpedo_boat", 2, const.CONST_HORIZONTAL, "E9")
 
 
+#Fonction qui convertit un numéro de lettre en lettre
+def convert_num_column_to_letter(num):
+    return const.columns_alpha_list[num]
+
+
+#Fonction qui convertit une lettre en numéro de lettre
+def convert_letter_to_num_column(letter):
+    return const.columns_alpha_list.index(letter)
+
+
+def init_ship_aleatoire():
+    """ Fonction qui permet d'initialiser de manière aléatoire les bateaux """
+    infos = [ ["aircraft_carrier", 5], ["cruiser", 4], ["destroyer", 3], ["submarine", 3], ["torpedo_boat", 2] ]
+    cases_used = []
+    # On parcoure les bateaux à créer
+    for infos_bateau in infos:
+        is_to_created = False
+        # Tant qu'il n'y a pas d'erreur pour la création du bateau
+        while not is_to_created:
+            choice_col = random.randint(0, 9)
+            choice_line = random.randint(1, 10)
+            coordonnees = convert_num_column_to_letter(choice_col)+str(choice_line)
+            sens = random.choice([const.CONST_HORIZONTAL, const.CONST_VERTICAL])
+            is_to_created = True
+
+            # On vérifie que le bateau ne dépasse pas les limites de la grille (si horizontal, grille horizontale)
+            if (sens == const.CONST_HORIZONTAL and choice_col > 10-infos_bateau[1]):
+                #print(f"Le sens est {sens} et le numéro de colonne est {choice_col} ({convert_num_column_to_letter(choice_col)}) Taille du bateau : {infos_bateau[1]} on recommence")
+                is_to_created = False
+            # On vérifie que le bateau ne dépasse pas les limites de la grille (si horizontal, grille verticale)
+            elif (sens == const.CONST_VERTICAL and choice_line > 10-infos_bateau[1]):
+                #print(f"Le sens est {sens} et le numéro de ligne est {choice_line} Taille du bateau : {infos_bateau[1]} on recommence")
+                is_to_created = False
+            # On vérifie que le bateau ne va pas rentrer en collision avec un des bateaux créés précédemment
+            else:
+                cases_of_new_ship = Ship.get_list_cases_by_first(coordonnees,sens,infos_bateau[1])
+                for case in cases_of_new_ship:
+                    if case in cases_used:
+                        print("Ce bateau va écraser un autre bateau, on recommence : case {case}")
+                        is_to_created = False
+
+            # Si tout est ok, on va pouvoir créer le bateau et sortir de la boucle
+            if (is_to_created):
+                print(f"On va initialiser le bateau {infos_bateau[0]}, longueur {infos_bateau[1]} sens {sens}, première case {coordonnees} ")
+                ship = Ship(infos_bateau[0], int(infos_bateau[1]), sens, coordonnees)
+                #On ajoute le bateau ainsi créé dans cases_used
+                cases_used.append(ship.list_cases)
+                is_to_created = True
+    
+
 if __name__ == '__main__':
     print("*********************************** Bataille navalle ********************************************")
 
     # Initialisation de la liste des navires
-    init_ship()
+    #Mode = 1 pour initialisation en dur des bateaux, Mode = 2 pour initialisation aléatoire
+    mode = 2
+    if mode == 1:
+        init_ship()
+    else:
+        init_ship_aleatoire()
     # Récupération de la liste des navires
     ship_list = Ship.ships_list
     # Initialisation de la liste des coordonnées de toutes les cases de tous les navires

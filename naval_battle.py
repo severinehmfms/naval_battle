@@ -106,10 +106,9 @@ def convert_letter_to_num_column(letter):
 
 def init_ship_aleatoire():
     """ Fonction qui permet d'initialiser de manière aléatoire les bateaux """
-    infos = [ ["aircraft_carrier", 5], ["cruiser", 4], ["destroyer", 3], ["submarine", 3], ["torpedo_boat", 2] ]
     cases_used = []
     # On parcoure les bateaux à créer
-    for infos_bateau in infos:
+    for infos_bateau in const.CONST_NAME_SHIP:
         is_to_created = False
         # Tant qu'il n'y a pas d'erreur pour la création du bateau
         while not is_to_created:
@@ -137,7 +136,7 @@ def init_ship_aleatoire():
 
             # Si tout est ok, on va pouvoir créer le bateau et sortir de la boucle
             if (is_to_created):
-                print(f"On va initialiser le bateau {infos_bateau[0]}, longueur {infos_bateau[1]} sens {sens}, première case {coordonnees} ")
+                print(f"On va initialiser le bateau {infos_bateau[0]}, Longueur {infos_bateau[1]}, Sens {sens}, Première case {coordonnees} ")
                 ship = Ship(infos_bateau[0], int(infos_bateau[1]), sens, coordonnees)
                 #On ajoute le bateau ainsi créé dans cases_used
                 cases_used.append(ship.list_cases)

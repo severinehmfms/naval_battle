@@ -14,3 +14,6 @@ CONST_VERTICAL = "V"
 english_alphabet_string_uppercase = string.ascii_uppercase
 alphabet_list = list(english_alphabet_string_uppercase)
 columns_alpha_list = alphabet_list[:10]
+
+#Informations fixes sur les bateaux
+CONST_NAME_SHIP = [["aircraft_carrier", 5], ["cruiser", 4], ["destroyer", 3], ["submarine", 3], ["torpedo_boat", 2]]

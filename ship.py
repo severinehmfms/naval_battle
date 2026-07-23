@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar
 import constantes as const
 
+""" Classe Ship qui représente un bateau"""
 
 @dataclass
 class Ship:
@@ -56,7 +57,7 @@ class Ship:
             self.is_coule = True
 
     @staticmethod
-    def get_list_cases_by_first(first_case,sens,length_ship):
+    def get_list_cases_by_first(first_case, sens, length_ship):
         """
             Fonction qui retourne les coordonnées des cases qui composent un navire (sous forme de tableau)
             firt_case : Coordonnées de la première case
@@ -94,8 +95,7 @@ class Ship:
         ship_cases = {}
         # Je parcours ma liste de navires
         for ship in Ship.ships_list:
-            #list_cases = ship.get_list_cases()
-            list_cases = Ship.get_list_cases_by_first(ship.first_case,ship.sens,ship.length_ship)
+            list_cases = Ship.get_list_cases_by_first(ship.first_case, ship.sens, ship.length_ship)
             ship.list_cases = list_cases
             # On ajoute la liste des coordonnées de ce navire à la liste globale des coordonnées
             for case in ship.list_cases:
